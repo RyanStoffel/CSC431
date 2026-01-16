@@ -1,38 +1,45 @@
-import jakarta.mail.*;
-import jakarta.mail.internet.*;
-import java.util.Properties;
+package Lab_1;
+import module java.base;
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 
-void main() {
-    // Load email credentials from .env
-    Dotenv dotenv = Dotenv.load();
+public class Lab_1 {
+    void main() {
+        // Load email credentials from .env.
+        Dotenv dotenv = Dotenv.load();
 
-    // Send email to specified user
-    sendEmail(dotenv, "ryanstoffel44@gmail.com");
-}
+        // Send email to specified user.
+        sendEmail(dotenv, "etabor3096@gmail.com");
+    }
 
-public static void sendEmail(Dotenv dotenv, String recipient) {
-    Properties properties = new Properties();
-    properties.put("mail.smtp.auth", "true");
-    properties.put("mail.smtp.starttls.enable", "true");
-    properties.put("mail.smtp.host", dotenv.get("HOST"));
-    properties.put("mail.smtp.port", dotenv.get("PORT"));
+    public static void sendEmail(Dotenv dotenv, String recipient) {
+        // Set up properties for the email such as authentication, host, and port number.
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", dotenv.get("HOST"));
+        properties.put("mail.smtp.port", dotenv.get("PORT"));
 
-    Session session = Session.getInstance(properties, new Authenticator() {
-        protected PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication(dotenv.get("EMAIL_USERNAME"), dotenv.get("EMAIL_PASSWORD"));
-        }
-    });
+        // Authenticate with Gmail using email username and email password from the .env.
+        Session session = Session.getInstance(properties, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(dotenv.get("EMAIL_USERNAME"), dotenv.get("EMAIL_PASSWORD"));
+            }
+        });
 
-    try {
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(dotenv.get("EMAIL_USERNAME")));
-        message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(recipient));
-        message.setSubject("Chase Security Alert: Suspicious Activity Detected");
+        // Try to send the message to the recipient.
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(dotenv.get("EMAIL_USERNAME"))); // Who's sending the email?
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(recipient)); // Who's receiving the email?
+            message.setSubject("Chase Security Alert: Suspicious Activity Detected"); // Subject of the email.
 
-        // HTML content with button
-        String htmlContent = String.format("""
+            // Email content made by using HTML and in-line CSS.
+            // Link is a Google app script that downloads a .txt file with our names, and a system timestamp.
+            String htmlContent = String.format("""
                     <html>
                     <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
                         <div style="max-width: 600px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -60,12 +67,13 @@ public static void sendEmail(Dotenv dotenv, String recipient) {
                     </html>
                     """, recipient);
 
-        message.setContent(htmlContent, "text/html; charset=utf-8");
+            message.setContent(htmlContent, "text/html; charset=utf-8");
 
-        Transport.send(message);
-        System.out.println("Email sent successfully");
+            Transport.send(message);
+            System.out.println("Email sent successfully");
 
-    } catch (MessagingException e) {
-        throw new RuntimeException(e);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
