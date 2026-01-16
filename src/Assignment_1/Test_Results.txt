@@ -1,0 +1,20 @@
+Test Case #1:
+Enter message you wish to encrypt: This is a test to encrypt AND decrypt a plain text message!
+Enter a 128-bit (16 Characters) Secret Key: 1234567890123456
+Enter a 128-bit (16 Characters) Initialization Vector: abcdefghijklmnop
+Encrypted Message: sBklsDIg3/Z2itTrYpShFANOPTZNUK1lR8O+ecpPO+82T8Km4OV90wCkvzahGwCgMmBjsNVR4eonNeRyRzuC/w==
+Decrypted Message: This is a test to encrypt AND decrypt a plain text message!
+
+Test Case #2:
+Enter message you wish to encrypt: I really like eating Green Apples and Strawberries.
+Enter a 128-bit (16 Characters) Secret Key: 1122334455667788
+Enter a 128-bit (16 Characters) Initialization Vector: qwertyuiopasdfgh
+Encrypted Message: REwTD25bhNvxGYiYosGhY6MjxKzjuvDEBu9uGq0pdP/i2pXcr3F2neKTTF6R/0DpxLee1zb7UaIHnqkLdLWcPg==
+Decrypted Message: I really like eating Green Apples and Strawberries.
+
+Test Case #3:
+Enter message you wish to encrypt: I really hope I get an A+ in CSC431 - Info Security & Computer Forensics!
+Enter a 128-bit (16 Characters) Secret Key: q1w2e3r4t5y6u7i8
+Enter a 128-bit (16 Characters) Initialization Vector: /.,mnbvcxz';lkjg
+Encrypted Message: dbh320YX1ymimH3huzTaW0+CX1xeB1hQVB8svOcbzpu1DHxSKy7RFWMovVDYv/hKw04reV6qKC0yQby32xyyXN02v9SdLpkz6Ay72uMwCQ0=
+Decrypted Message: I really hope I get an A+ in CSC431 - Info Security & Computer Forensics!

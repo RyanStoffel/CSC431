@@ -30,4 +30,4 @@ bin/
 .DS_Store
 
 ### Environment Variables ###
-.env
+src/.env
