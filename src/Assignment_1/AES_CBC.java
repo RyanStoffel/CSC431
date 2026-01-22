@@ -6,7 +6,7 @@ public class AES_CBC {
         Scanner scanner = new Scanner(System.in);
         String input;
 
-        // Simple do-while loop to allow user to encrypt multiple messages.
+        // Simple do-while loop to allow the user to encrypt multiple messages.
         do {
             System.out.println("Welcome to Ryan Stoffel's AES CBC Encryptor and Decryptor!");
 
@@ -99,7 +99,7 @@ public class AES_CBC {
         } while (input.length != 16);
 
         // Hash the input to safely & securely store the user's inputted secretKey.
-        String result = hashInput(new String(input)).substring(0, 16);
+        String result = hashString(new String(input)).substring(0, 16);
         // Wipe the temporary input to make sure we are not storing the user's inputted secretKey.
         Arrays.fill(input, '\0');
         return result;
@@ -117,14 +117,14 @@ public class AES_CBC {
         } while (input.length != 16);
 
         // Hash the input to safely & securely store the user's inputted initializationVector.
-        String result = hashInput(new String(input)).substring(0, 16);
+        String result = hashString(new String(input)).substring(0, 16);
         // Wipe the temporary input to make sure we are not storing the user's inputted secretKey.
         Arrays.fill(input, '\0');
         return result;
     }
 
     // Hash the user's input using SHA-256.
-    private static String hashInput(String input) {
+    private static String hashString(String input) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             byte[] hash = messageDigest.digest(input.getBytes());

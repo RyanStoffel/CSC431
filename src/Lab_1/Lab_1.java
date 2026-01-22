@@ -10,7 +10,7 @@ public class Lab_1 {
         // Load email credentials from .env.
         Dotenv dotenv = Dotenv.load();
 
-        // Send email to specified user.
+        // Send email to a specified user.
         sendEmail(dotenv, "etabor3096@gmail.com");
     }
 
