@@ -9,12 +9,15 @@ import static java.nio.file.StandardOpenOption.*;
 
 public class Hashing {
     void main() {
+        // Write the test cases to a file.
         writeTestCasesFile();
 
+        // Define scanner and ask user for input.
         Scanner scanner = new Scanner(System.in);
         String userInput = askUserForMessageOrTextFile(scanner);
         String hashedInput;
 
+        // Check if the user input is a text file.
         if (userInput.toLowerCase().endsWith(".txt")) {
             try {
                 userInput = readFile(userInput);
@@ -54,9 +57,10 @@ public class Hashing {
         String output = "";
         String hashedInput = hashString(input); // Re-Hash the input before modifying it.
         String reHashedInput = hashString(input); // Re-Hash the original input.
-        String modifiedInput = input += (" - modified."); // Modify the input.
+        String modifiedInput = input + (" - modified."); // Modify the input.
         String modifiedHashedInput = hashString(modifiedInput); // Hash the modified input.
 
+        // For Test Cases, add the results to the output string.
         if (forTestCases) {
             if (modify) {
                 output += "Modified Input: " + modifiedInput + "\n";
@@ -68,7 +72,10 @@ public class Hashing {
             }
             return output;
 
-        } else {
+        }
+
+        // For non-test cases, print the results to the console.
+        else {
             if (modify) {
                 System.out.println("Modified Input: " + modifiedInput);
                 System.out.println("Modified Hashed Input: " + modifiedHashedInput);
@@ -140,15 +147,20 @@ public class Hashing {
 
     // Write a Test_Cases.txt file with the results of the hashing operations.
     private static void writeTestCasesFile() {
+        // Define a file name for the Test Cases.
         Path path = Paths.get("Test_Cases.txt");
+
+        // Define 3 test inputs.
         String testInput1 = "This is a test input.";
         String testInput2 = "This is another test input.";
         String testInput3 = "This is yet another test input.";
 
+        // Hash the test inputs.
         String hashedInput1 = hashString(testInput1);
         String hashedInput2 = hashString(testInput2);
         String hashedInput3 = hashString(testInput3);
 
+        // Define a new string to store the test cases.
         String fileContent = "";
         fileContent += "Test Input 1: " + testInput1 + "\n";
         fileContent += "Hashed Input 1: " + hashedInput1 + "\n";
@@ -160,6 +172,7 @@ public class Hashing {
         fileContent += "Hashed Input 3: " + hashedInput3 + "\n";
         fileContent += "Modified Test Input 3: " + simulateModification(testInput3, true, true) + " \n";
 
+        // Convert the string to bytes and write it to the file.
         byte[] data = fileContent.getBytes();
         try (OutputStream out = new BufferedOutputStream(
                 Files.newOutputStream(path, CREATE, TRUNCATE_EXISTING))) {
