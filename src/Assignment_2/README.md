@@ -13,6 +13,6 @@ To hash a plain text message, here are the steps:
 To hash a text file, here are the steps:
 - Run this command: `java Hashing.java`
 - When prompted, type in the path to the text file you want to hash. For example, 'Example_Input.txt.'
-  - Just make sure that your txt file is in the SAME directory as the `Hashing.java` file.
+  - Make sure that your txt file is in the SAME directory as the `Hashing.java` file.
 - The hashed message will be displayed.
 - You can also simulate a modification to the message by responding 'y' to the prompt.
