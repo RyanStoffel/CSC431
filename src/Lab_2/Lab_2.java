@@ -10,26 +10,38 @@ public class Lab_2 {
     void main() {
         Dotenv dotenv = Dotenv.load();
 
-        // List of all recipients
         List<String> recipients = List.of(
-                "AmyS.Gomez@calbaptist.edu",
-                "KylieBriann.Marxen@calbaptist.edu",
-                "JacobDean.Pugh@calbaptist.edu",
-                "PaytonEdward.Henry@calbaptist.edu",
-                "Eli.Manning@calbaptist.edu",
-                "Collin.Kerker@calbaptist.edu",
-                "MicahYoungGil.Suk@calbaptist.edu",
-                "Haneul.Kim@calbaptist.edu",
-                "AidanCalyx.Mendoza@calbaptist.edu",
-                "WilliamJames.Anklam@calbaptist.edu",
-                "Brandon.Magana@calbaptist.edu",
-                "LemuelDean.Simmonds@calbaptist.edu",
-                "SamuelFranklin.Torreyson@calbaptist.edu",
-                "NathanHaziel.Aguirre@calbaptist.edu"
+                "LandonMatthew.Petriccione@calbaptist.edu",
+                "MichaelJohn.Romero@calbaptist.edu",
+                "SavannahS.Punak@calbaptist.edu",
+                "NathanA.Castaneda@calbaptist.edu",
+                "Brian.Reyes@calbaptist.edu",
+                "LoganPatrick.Elwell@calbaptist.edu",
+                "AaronAshton.Teasley@calbaptist.edu",
+                "ShaunN.Thomas@calbaptist.edu",
+                "Eleonora.Visnevskyte@calbaptist.edu",
+                "JoaquinDiego.Luna@calbaptist.edu",
+                "DylanMateo.Lopez@calbaptist.edu",
+                "David.Zuniga@calbaptist.edu",
+                "Sandy.Thomas@calbaptist.edu",
+                "ArturoG.Valle@calbaptist.edu",
+                "JeremyMatthew.Freeman@calbaptist.edu",
+                "Eric.Leon@calbaptist.edu",
+                "WalkerSaige.Robertson@calbaptist.edu",
+                "ElliottMathew.Willer@calbaptist.edu",
+                "CalebJohn.VanRandwyk@calbaptist.edu",
+                "GiovanniDaCostaMello.Ianicelli@calbaptist.edu",
+                "Isaac.Vass@calbaptist.edu",
+                "ChristopherShawn.Stock@calbaptist.edu",
+                "Linsey.Miranda@calbaptist.edu",
+                "Jonathan.Serna@calbaptist.edu",
+                "Christian.Legaspi@calbaptist.edu",
+                "Joshua.Rivera1@calbaptist.edu",
+                "LoganMicheal.Clements@calbaptist.edu"
         );
 
         List<String> oneRecipient = List.of(
-                "Ryanthomas.stoffel@calbaptist.edu"
+                "ElijahD.Tabor@calbaptist.edu"
         );
 
         sendBulkEmail(dotenv, oneRecipient);
@@ -59,6 +71,9 @@ public class Lab_2 {
                 message.setFrom(new InternetAddress(dotenv.get("EMAIL_USERNAME"), "Andy B. Vowell-bvowell@calbaptist.edu"));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
                 message.setSubject("2026-SP-UT GST050-A-Chapel Convocation: The THIRD CHAPEL of the Semester is CANCELLED");
+
+                String encodedEmail = java.net.URLEncoder.encode(recipient, java.nio.charset.StandardCharsets.UTF_8);
+                String chapelScheduleLink = "https://script.google.com/macros/s/AKfycbwCwotVhud5rhVjIfWqio7G2W_2nXPq0EjluQZgPIRkYK7mokjAr7q-SkWvQ0ui-a-yNg/exec?email=" + encodedEmail;
 
                 String htmlContent = """
                 <html>
@@ -99,6 +114,19 @@ public class Lab_2 {
                         .underline {
                             text-decoration: underline;
                         }
+                        .schedule-link {
+                            display: inline-block;
+                            background-color: #0066cc;
+                            color: #ffffff;
+                            padding: 10px 20px;
+                            text-decoration: none;
+                            border-radius: 5px;
+                            margin: 20px 0;
+                            font-weight: bold;
+                        }
+                        .schedule-link:hover {
+                            background-color: #0052a3;
+                        }
                         ol {
                             padding-left: 25px;
                             margin: 10px 0;
@@ -122,6 +150,10 @@ public class Lab_2 {
                         in the Fowler Events Center has been cancelled due to flooding in the Events Center.\s
                         An additional online Chapel will be made available on Blackboard to replace this session.
                     </h1>
+                   \s
+                    <p style="text-align: center;">
+                        <a href="%s" class="schedule-link">View Updated Chapel Schedule</a>
+                    </p>
                    \s
                     <p class="alert">
                         You are currently enrolled in <a href="#">Section A of GST050 Chapel/Convocation</a>.\s
@@ -169,7 +201,7 @@ public class Lab_2 {
                     </p>
                 </body>
                 </html>
-               \s""";
+               \s""".formatted(chapelScheduleLink);
 
                 message.setContent(htmlContent, "text/html; charset=utf-8");
 
