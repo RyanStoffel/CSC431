@@ -7,14 +7,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class MMORPGServer {
     private static final int PORT = 12345;
-    private static final Map<String, PlayerHandler> players = new ConcurrentHashMap<>();
+    private static Map<String, PlayerHandler> players = new ConcurrentHashMap<>();
 
-    void main() {
+    public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server started on port " + PORT);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                PlayerHandler playerHandler = new PlayerHandler(clientSocket);
+                PlayerHandler playerHandler = new PlayerHandler(clientSocket, players);
                 new Thread(playerHandler).start();
             }
         } catch (IOException e) {
@@ -45,18 +45,21 @@ public class MMORPGServer {
 }
 
 class PlayerHandler implements Runnable {
-    private final Socket socket;
+    private Socket socket;
     private PrintWriter out;
+    private BufferedReader in;
     private String playerName;
+    private Map<String, PlayerHandler> players;
 
-    public PlayerHandler(Socket socket) {
+    public PlayerHandler(Socket socket, Map<String, PlayerHandler> players) {
         this.socket = socket;
+        this.players = players;
     }
 
     @Override
     public void run() {
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
             out.println("Enter your player name:");
