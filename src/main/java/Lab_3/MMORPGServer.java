@@ -6,15 +6,20 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MMORPGServer {
+
     private static final int PORT = 12345;
-    private static Map<String, PlayerHandler> players = new ConcurrentHashMap<>();
+    private static Map<String, PlayerHandler> players =
+        new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server started on port " + PORT);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                PlayerHandler playerHandler = new PlayerHandler(clientSocket, players);
+                PlayerHandler playerHandler = new PlayerHandler(
+                    clientSocket,
+                    players
+                );
                 new Thread(playerHandler).start();
             }
         } catch (IOException e) {
@@ -22,7 +27,10 @@ public class MMORPGServer {
         }
     }
 
-    public static synchronized void broadcast(String message, PlayerHandler sender) {
+    public static synchronized void broadcast(
+        String message,
+        PlayerHandler sender
+    ) {
         for (PlayerHandler player : players.values()) {
             if (player != sender) {
                 player.sendMessage(message);
@@ -30,12 +38,18 @@ public class MMORPGServer {
         }
     }
 
-    public static synchronized void updatePlayerPosition(String playerName, String positionData) {
+    public static synchronized void updatePlayerPosition(
+        String playerName,
+        String positionData
+    ) {
         String message = "UPDATE:" + playerName + ":" + positionData;
         broadcast(message, players.get(playerName));
     }
 
-    public static synchronized void addPlayer(String playerName, PlayerHandler playerHandler) {
+    public static synchronized void addPlayer(
+        String playerName,
+        PlayerHandler playerHandler
+    ) {
         players.put(playerName, playerHandler);
     }
 
@@ -45,6 +59,7 @@ public class MMORPGServer {
 }
 
 class PlayerHandler implements Runnable {
+
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
@@ -59,7 +74,9 @@ class PlayerHandler implements Runnable {
     @Override
     public void run() {
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new BufferedReader(
+                new InputStreamReader(socket.getInputStream())
+            );
             out = new PrintWriter(socket.getOutputStream(), true);
 
             out.println("Enter your player name:");
@@ -71,7 +88,9 @@ class PlayerHandler implements Runnable {
             while ((message = in.readLine()) != null) {
                 if (message.startsWith("MOVE:")) {
                     String positionData = message.substring(5);
-                    System.out.println(playerName + " moved to " + positionData);
+                    System.out.println(
+                        playerName + " moved to " + positionData
+                    );
                     MMORPGServer.updatePlayerPosition(playerName, positionData);
                 }
             }

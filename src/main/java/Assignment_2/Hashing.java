@@ -1,13 +1,16 @@
 package Assignment_2;
+
+import static java.nio.file.StandardOpenOption.*;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.security.*;
-import static java.nio.file.StandardOpenOption.*;
+import java.util.Scanner;
 
 public class Hashing {
+
     void main() {
         // Write the test cases to a file.
         writeTestCasesFile();
@@ -33,7 +36,7 @@ public class Hashing {
         } else {
             System.out.println("Input: " + userInput);
             hashedInput = hashString(userInput);
-            System.out.println("Hashed Input: " + hashedInput  + "\n");
+            System.out.println("Hashed Input: " + hashedInput + "\n");
 
             char decision = askUserToSimulateModification(scanner);
             simulateModification(userInput, decision == 'y', false);
@@ -48,12 +51,18 @@ public class Hashing {
 
     // Ask the user if they would like to simulate a modification to the input.
     private static char askUserToSimulateModification(Scanner scanner) {
-        System.out.print("Would you like to simulate a modification to the input? (y/n): ");
+        System.out.print(
+            "Would you like to simulate a modification to the input? (y/n): "
+        );
         return scanner.next().charAt(0);
     }
 
     // Simulate a modification to the input and compare the hashes.
-    private static String simulateModification(String input, boolean modify, boolean forTestCases) {
+    private static String simulateModification(
+        String input,
+        boolean modify,
+        boolean forTestCases
+    ) {
         String output = "";
         String hashedInput = hashString(input); // Re-Hash the input before modifying it.
         String reHashedInput = hashString(input); // Re-Hash the original input.
@@ -64,33 +73,42 @@ public class Hashing {
         if (forTestCases) {
             if (modify) {
                 output += "Modified Input: " + modifiedInput + "\n";
-                output += "Modified Hashed Input: " + modifiedHashedInput + "\n";
-                output += checkDataIntegrity(hashedInput, modifiedHashedInput) + "\n";
+                output +=
+                    "Modified Hashed Input: " + modifiedHashedInput + "\n";
+                output +=
+                    checkDataIntegrity(hashedInput, modifiedHashedInput) + "\n";
             } else {
                 output += "Re-Hashed Input: " + reHashedInput + "\n";
                 output += checkDataIntegrity(hashedInput, reHashedInput) + "\n";
             }
             return output;
-
         }
-
         // For non-test cases, print the results to the console.
         else {
             if (modify) {
                 System.out.println("Modified Input: " + modifiedInput);
-                System.out.println("Modified Hashed Input: " + modifiedHashedInput);
-                System.out.println(checkDataIntegrity(hashedInput, modifiedHashedInput)); // Compare the hashes and determine if the data integrity has been compromised.
+                System.out.println(
+                    "Modified Hashed Input: " + modifiedHashedInput
+                );
+                System.out.println(
+                    checkDataIntegrity(hashedInput, modifiedHashedInput)
+                ); // Compare the hashes and determine if the data integrity has been compromised.
             } else {
                 System.out.println("Re-Hashing your input...");
                 System.out.println("Re-Hashed Input: " + reHashedInput);
-                System.out.println(checkDataIntegrity(hashedInput, reHashedInput)); // Compare the hashes and determine if the data integrity has been compromised.
+                System.out.println(
+                    checkDataIntegrity(hashedInput, reHashedInput)
+                ); // Compare the hashes and determine if the data integrity has been compromised.
             }
         }
         return output;
     }
 
     // Compare the hashes of two inputs and determine if the data integrity has been compromised.
-    private static String checkDataIntegrity(String hashedInput1, String hashedInput2) {
+    private static String checkDataIntegrity(
+        String hashedInput1,
+        String hashedInput2
+    ) {
         if (hashedInput1.equals(hashedInput2)) {
             return "Data integrity check: PASSED.";
         } else {
@@ -102,9 +120,12 @@ public class Hashing {
     private static String readFile(String filePath) throws IOException {
         Path file = Path.of(filePath); // Convert the file path to a Path object.
         // Try to open the file and read its content.
-        try (InputStream in = Files.newInputStream(file);
-             BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(in))) {
+        try (
+            InputStream in = Files.newInputStream(file);
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(in)
+            )
+        ) {
             String line;
             StringBuilder content = new StringBuilder();
             // Read the file line by line and append it to the content StringBuilder.
@@ -141,7 +162,10 @@ public class Hashing {
 
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Failed to compute hash for input: " + input, e);
+            throw new RuntimeException(
+                "Failed to compute hash for input: " + input,
+                e
+            );
         }
     }
 
@@ -164,21 +188,33 @@ public class Hashing {
         String fileContent = "";
         fileContent += "Test Input 1: " + testInput1 + "\n";
         fileContent += "Hashed Input 1: " + hashedInput1 + "\n";
-        fileContent += "Modified Test Input 1: " + simulateModification(testInput1, true, true) + " \n";
+        fileContent +=
+            "Modified Test Input 1: " +
+            simulateModification(testInput1, true, true) +
+            " \n";
         fileContent += "Test Input 2: " + testInput2 + "\n";
         fileContent += "Hashed Input 2: " + hashedInput2 + "\n";
         fileContent += simulateModification(testInput2, false, true) + " \n";
         fileContent += "Test Input 3: " + testInput3 + "\n";
         fileContent += "Hashed Input 3: " + hashedInput3 + "\n";
-        fileContent += "Modified Test Input 3: " + simulateModification(testInput3, true, true) + " \n";
+        fileContent +=
+            "Modified Test Input 3: " +
+            simulateModification(testInput3, true, true) +
+            " \n";
 
         // Convert the string to bytes and write it to the file.
         byte[] data = fileContent.getBytes();
-        try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(path, CREATE, TRUNCATE_EXISTING))) {
+        try (
+            OutputStream out = new BufferedOutputStream(
+                Files.newOutputStream(path, CREATE, TRUNCATE_EXISTING)
+            )
+        ) {
             out.write(data, 0, data.length);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to write to file: " + "Test_Cases.txt", e);
+            throw new RuntimeException(
+                "Failed to write to file: " + "Test_Cases.txt",
+                e
+            );
         }
     }
 }

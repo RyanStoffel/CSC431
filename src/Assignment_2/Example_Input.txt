@@ -1,1 +1,0 @@
-Hello! This is an example input file. We will hash the contents of this file.

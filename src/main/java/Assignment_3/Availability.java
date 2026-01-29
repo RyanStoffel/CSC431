@@ -1,10 +1,14 @@
 package Assignment_3;
+
 import java.util.Scanner;
 
 public class Availability {
+
     void main() {
         Scanner scanner = new Scanner(System.in);
-        int[] numberOfServersAndRequests = promptUserForNumberOfServers(scanner);
+        int[] numberOfServersAndRequests = promptUserForNumberOfServers(
+            scanner
+        );
         Server[] servers = new Server[numberOfServersAndRequests[0]];
     }
 
@@ -21,7 +25,8 @@ public class Availability {
         return numberOfServersAndRequests;
     }
 
-    private static void roundRobinScheduling(Server[] servers, int numberOfRequests) {
-        
-    }
+    private static void roundRobinScheduling(
+        Server[] servers,
+        int numberOfRequests
+    ) {}
 }

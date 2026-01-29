@@ -1,8 +1,10 @@
 package Lab_3;
+
 import java.io.*;
 import java.net.*;
 
 public class MMORPGClient {
+
     private static final String SERVER_ADDRESS = "localhost";
     private static final int SERVER_PORT = 12345;
 
@@ -13,19 +15,25 @@ public class MMORPGClient {
             final int id = i;
             new Thread(() -> {
                 try {
-                    Socket socket = new Socket("localhost", 12345);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                    BufferedReader in = new BufferedReader(
+                        new InputStreamReader(socket.getInputStream())
+                    );
+                    PrintWriter out = new PrintWriter(
+                        socket.getOutputStream(),
+                        true
+                    );
 
                     in.readLine(); // Read prompt
-                    out.println("Attacker" + id); // Register with unique name
+                    out.println("Attacker" + id); // Register with a unique name
 
                     // Spam MOVE commands continuously to trigger broadcasts
                     while (true) {
                         out.println("MOVE:x" + id + ",y" + id);
                     }
                 } catch (Exception e) {}
-            }).start();
+            })
+                .start();
 
             if (i % 100 == 0) {
                 System.out.println("Launched " + i + " attack threads");

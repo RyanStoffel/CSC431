@@ -1,14 +1,28 @@
 package Assignment_1;
-import module java.base;
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Base64;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.AlgorithmParameters;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import java.nio.charset.StandardCharsets;
+
 
 public class AES_CBC {
+
     void main() throws Exception {
         Scanner scanner = new Scanner(System.in);
         String input;
 
         // Simple do-while loop to allow the user to encrypt multiple messages.
         do {
-            System.out.println("Welcome to Ryan Stoffel's AES CBC Encryptor and Decryptor!");
+            System.out.println(
+                "Welcome to Ryan Stoffel's AES CBC Encryptor and Decryptor!"
+            );
 
             String message = askUserForMessage(scanner);
             String secretKey = askUserForSecretKey(scanner);
@@ -20,7 +34,9 @@ public class AES_CBC {
             String decryptedMessage = decrypt(encryptedBytes, secretKey);
             System.out.println("Decrypted Message: " + decryptedMessage);
 
-            System.out.print("\nType 'y' to encrypt another message or 'exit' to quit: ");
+            System.out.print(
+                "\nType 'y' to encrypt another message or 'exit' to quit: "
+            );
             input = scanner.next();
             scanner.nextLine();
         } while (input.equalsIgnoreCase("y"));
@@ -32,35 +48,50 @@ public class AES_CBC {
     private Cipher encryptionCipher;
 
     // Encrypt a plain text message.
-    private byte[] encrypt(String message, String secretKey, String iv) throws Exception {
+    private byte[] encrypt(String message, String secretKey, String iv)
+        throws Exception {
         SecretKeySpec secretKeySpec;
-        if (secretKey.length() != 16) { // Verify secretKey is exactly 128-bits (16 Characters) long.
-            throw new Exception("Secret Key must be exactly 128-bits (16 Characters)");
+        if (secretKey.length() != 16) {
+            // Verify secretKey is exactly 128-bits (16 Characters) long.
+            throw new Exception(
+                "Secret Key must be exactly 128-bits (16 Characters)"
+            );
         } else {
             // Generate secretKeySpec for AES Algorithm using the user's inputted secretKey.
             secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
         }
 
         IvParameterSpec ivParameterSpec;
-        if (iv.length() != 16) { // Verify initializationVector is exactly 128-bit (16 Characters) long.
-            throw new Exception("Initialization Vector must be exactly 128-bits (16 Characters)");
-        }  else {
+        if (iv.length() != 16) {
+            // Verify initializationVector is exactly 128-bit (16 Characters) long.
+            throw new Exception(
+                "Initialization Vector must be exactly 128-bits (16 Characters)"
+            );
+        } else {
             // Generate initializationVectorSpec using the user's inputter initializationVector.
             ivParameterSpec = new IvParameterSpec(iv.getBytes());
         }
 
         // Define the mode and the padding we want to use for the AES Algorithm.
         encryptionCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        encryptionCipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+        encryptionCipher.init(
+            Cipher.ENCRYPT_MODE,
+            secretKeySpec,
+            ivParameterSpec
+        );
         // Encrypt the plain text message.
         return encryptionCipher.doFinal(message.getBytes());
     }
 
     // Decrypt an encrypted message.
-    private String decrypt(byte[] encryptedBytes, String secretKey) throws Exception {
+    private String decrypt(byte[] encryptedBytes, String secretKey)
+        throws Exception {
         SecretKeySpec secretKeySpec;
-        if (secretKey.length() != 16) { // Verify secretKey is exactly 128-bits (16 Characters) long.
-            throw new Exception("Secret Key must be exactly 128-bits (16 Characters)");
+        if (secretKey.length() != 16) {
+            // Verify secretKey is exactly 128-bits (16 Characters) long.
+            throw new Exception(
+                "Secret Key must be exactly 128-bits (16 Characters)"
+            );
         } else {
             // Generate secretKeySpec for AES Algorithm using the user's inputted secretKey.
             secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "AES");
@@ -69,10 +100,18 @@ public class AES_CBC {
         // Define the mode and the padding we want to use for the AES Algorithm.
         Cipher decryptionCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         // Generate algorithmParameters from the encryptionCipher, that's why the cipher needs to be in the class scope.
-        AlgorithmParameters algorithmParameters = encryptionCipher.getParameters();
-        decryptionCipher.init(Cipher.DECRYPT_MODE, secretKeySpec, algorithmParameters);
+        AlgorithmParameters algorithmParameters =
+            encryptionCipher.getParameters();
+        decryptionCipher.init(
+            Cipher.DECRYPT_MODE,
+            secretKeySpec,
+            algorithmParameters
+        );
         // Decrypt the encrypted message.
-        return new String(decryptionCipher.doFinal(encryptedBytes), StandardCharsets.UTF_8);
+        return new String(
+            decryptionCipher.doFinal(encryptedBytes),
+            StandardCharsets.UTF_8
+        );
     }
 
     // Encode an encrypted message.
@@ -92,8 +131,11 @@ public class AES_CBC {
         do {
             System.out.print("Enter a 128-bit (16 Characters) Secret Key: ");
             input = scanner.nextLine().toCharArray();
-            if (input.length != 16) { // Verify secretKey is exactly 128-bits (16 Characters) long.
-                System.out.println("Secret Key must be exactly 128-bits (16 Characters)");
+            if (input.length != 16) {
+                // Verify secretKey is exactly 128-bits (16 Characters) long.
+                System.out.println(
+                    "Secret Key must be exactly 128-bits (16 Characters)"
+                );
                 Arrays.fill(input, '\0'); // Reset the input and ask again.
             }
         } while (input.length != 16);
@@ -108,10 +150,15 @@ public class AES_CBC {
     private static String askUserForInitializationVector(Scanner scanner) {
         char[] input;
         do {
-            System.out.print("Enter a 128-bit (16 Characters) Initialization Vector: ");
+            System.out.print(
+                "Enter a 128-bit (16 Characters) Initialization Vector: "
+            );
             input = scanner.nextLine().toCharArray();
-            if (input.length != 16) { // Verify initializationVector is exactly 128-bit (16 Characters) long.
-                System.out.println("Initialization Vector must be exactly 128-bits (16 Characters)");
+            if (input.length != 16) {
+                // Verify initializationVector is exactly 128-bit (16 Characters) long.
+                System.out.println(
+                    "Initialization Vector must be exactly 128-bits (16 Characters)"
+                );
                 Arrays.fill(input, '\0');
             }
         } while (input.length != 16);
@@ -142,4 +189,3 @@ public class AES_CBC {
         }
     }
 }
-
