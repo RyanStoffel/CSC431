@@ -1,0 +1,96 @@
+TEST CASE 1
+-----------
+Input:
+Enter the number of servers: 3
+Enter the total number of requests: 10
+
+Output:
+Initializing 3 servers...
+
+Starting simulation with 10 requests
+Request 1 handled by Server 1 (Total: 1)
+Request 2 handled by Server 2 (Total: 1)
+Request 3 handled by Server 3 (Total: 1)
+[!] Server 2 FAILED
+Request 4 handled by Server 1 (Total: 2)
+Request 5 handled by Server 3 (Total: 2)
+[+] Server 2 RECOVERED
+Request 6 handled by Server 1 (Total: 3)
+Request 7 handled by Server 2 (Total: 1)
+Request 8 handled by Server 3 (Total: 3)
+Request 9 handled by Server 1 (Total: 4)
+Request 10 handled by Server 2 (Total: 2)
+
+Final Statistics
+Server 1 - Status: Available - Requests: 4
+Server 2 - Status: Available - Requests: 2
+Server 3 - Status: Available - Requests: 3
+
+
+TEST CASE 2
+-----------
+Input:
+Enter the number of servers: 5
+Enter the total number of requests: 25
+
+Output:
+Initializing 5 servers...
+
+Starting simulation with 25 requests
+Request 1 handled by Server 1 (Total: 1)
+Request 2 handled by Server 2 (Total: 1)
+Request 3 handled by Server 3 (Total: 1)
+[!] Server 3 FAILED
+Request 4 handled by Server 4 (Total: 1)
+Request 5 handled by Server 5 (Total: 1)
+Request 6 handled by Server 1 (Total: 2)
+Request 7 handled by Server 2 (Total: 2)
+Request 8 handled by Server 4 (Total: 2)
+[+] Server 3 RECOVERED
+Request 9 handled by Server 5 (Total: 2)
+Request 10 handled by Server 1 (Total: 3)
+Request 11 handled by Server 2 (Total: 3)
+Request 12 handled by Server 3 (Total: 1)
+Request 13 handled by Server 4 (Total: 3)
+Request 14 handled by Server 5 (Total: 3)
+Request 15 handled by Server 1 (Total: 4)
+Request 16 handled by Server 2 (Total: 4)
+Request 17 handled by Server 3 (Total: 2)
+Request 18 handled by Server 4 (Total: 4)
+Request 19 handled by Server 5 (Total: 4)
+Request 20 handled by Server 1 (Total: 5)
+Request 21 handled by Server 2 (Total: 5)
+Request 22 handled by Server 3 (Total: 3)
+Request 23 handled by Server 4 (Total: 5)
+Request 24 handled by Server 5 (Total: 5)
+Request 25 handled by Server 1 (Total: 6)
+
+Final Statistics
+Server 1 - Status: Available - Requests: 6
+Server 2 - Status: Available - Requests: 5
+Server 3 - Status: Available - Requests: 3
+Server 4 - Status: Available - Requests: 5
+Server 5 - Status: Available - Requests: 5
+
+
+TEST CASE 3
+-----------
+Input:
+Enter the number of servers: 2
+Enter the total number of requests: 5
+
+Output:
+Initializing 2 servers...
+
+Starting simulation with 5 requests
+Request 1 handled by Server 1 (Total: 1)
+[!] Server 1 FAILED
+Request 2 handled by Server 2 (Total: 1)
+Request 3 handled by Server 2 (Total: 2)
+[+] Server 1 RECOVERED
+Request 4 handled by Server 1 (Total: 1)
+Request 5 handled by Server 2 (Total: 3)
+
+Final Statistics
+Server 1 - Status: Available - Requests: 1
+Server 2 - Status: Available - Requests: 3
