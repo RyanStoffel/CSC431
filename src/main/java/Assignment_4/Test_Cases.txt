@@ -1,0 +1,31 @@
+Bell-LaPadula Model - Test Cases
+==================================
+
+Users:
+  U1 Alice - TOP_SECRET
+  U2 Bob - SECRET
+  U3 Charlie - CONFIDENTIAL
+  U4 Diana - UNCLASSIFIED
+
+Objects:
+  O1 Public Memo - UNCLASSIFIED
+  O2 Internal Report - CONFIDENTIAL
+  O3 Mission Plan - SECRET
+  O4 Nuclear Codes - TOP_SECRET
+
+
+Test  User              Object              Operation  Result   Rule
+----  ----              ------              ---------  ------   ----
+1     U4 Diana (U)      O4 Nuclear Codes (TS)  READ    DENIED   No read up
+2     U1 Alice (TS)     O1 Public Memo (U)     READ    ALLOWED  TS >= U
+3     U1 Alice (TS)     O1 Public Memo (U)     WRITE   DENIED   No write down
+4     U4 Diana (U)      O4 Nuclear Codes (TS)  WRITE   ALLOWED  TS >= U
+5     U2 Bob (S)        O3 Mission Plan (S)    READ    ALLOWED  Equal levels
+6     U3 Charlie (C)    O2 Internal Report (C) WRITE   ALLOWED  Equal levels
+7     U99 (invalid)     O1 Public Memo (U)     READ    DENIED   User not found
+8     U1 Alice (TS)     O99 (invalid)          READ    DENIED   Object not found
+9     U4 Diana (S*)     O3 Mission Plan (S)    READ    ALLOWED  After level change U->S
+
+Test 9: Diana's level was changed from UNCLASSIFIED to SECRET before the read attempt.
+
+All 9 tests passed as expected.
