@@ -1,0 +1,28 @@
+Biba Integrity Model - Test Results
+CSC 431 - Information Security
+
+Test 1: Alice (Very High) reads PublicNotice (Low)
+  Expected: DENIED
+  Result:   DENIED - Violates Simple Integrity Property (No Read Down)
+
+Test 2: Bob (High) reads ConfidentialReport (High)
+  Expected: ALLOWED
+  Result:   ALLOWED - Same integrity level
+
+Test 3: Diana (Low) writes TopSecretDoc (Very High)
+  Expected: DENIED
+  Result:   DENIED - Violates *-Integrity Property (No Write Up)
+
+Test 4: Charlie (Medium) writes InternalMemo (Medium)
+  Expected: ALLOWED
+  Result:   ALLOWED - Same integrity level
+
+Test 5: Diana (Low) reads TopSecretDoc (Very High)
+  Expected: ALLOWED
+  Result:   ALLOWED - Reading up is permitted
+
+Test 6: Invalid user U99 reads TopSecretDoc
+  Expected: ERROR
+  Result:   ERROR - User 'U99' not found
+
+All 6 test cases passed.
