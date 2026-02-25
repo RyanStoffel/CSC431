@@ -1,0 +1,22 @@
+RSA Encryption - Test Cases
+============================
+
+Test Case 1: Simple greeting
+-----------------------------
+Input:     Hello World
+Encrypted: lw24DLH36Qs6tv67/OW/2pZmyxQ1P7vMtjjcmVyuTXytFa+ifJu6K//YV5xp7fyeMndEFK0HNwY1O/7bRyv2hdgFNr2flse1JpvDkuvqprBXUZ1UXid5doHVsT1RcGO+rB/8e0qeCFSZ0/kIiG1zhY8F3y2ABSinDEqzC7utS8JajQmLqdJh2GkuE5/NUK57o2PihCq9OvgyoFdRc/soeVRP0F2Ar1LkltUM++ur44yNjUK8U4IZL6/83lsA8LIaNOuhnzsTVDOVVJRSv5c0AQWMjjUrNnsPodudEOaX4iHo0inACLKDKvLr/6337YDpsoSVRiGZRnbE/DXiDIxOSw==
+Decrypted: Hello World
+
+Test Case 2: Sentence with mixed case
+---------------------------------------
+Input:     RSA encryption is fun
+Encrypted: KXCaGm5kXH/46UYjsHROcprG4zdmJ7Tp7/vNd22dR65G0Redy0cPqofevrFaH0i6PUAa1pwwVv1MiZSAjREt2TxmE+H4bdUaadA01eZbK5hErMdic70DGBEobkctfbO5+VlzHUtFVnzkSd50uspj1cB7Y6qCwVDE0OFUUzK2fmOHzce1Sx9uxmDzgcQr6p3nnUGGeLw3p4OeK8spW7FyCBoMdE0gfggbz1vKA86usmQ00jMqDXgHusj8Smk9chhY22aaIs/jDfqMaJvFmjfvYLodeuGedhY0kzXv9jquZTkzR/2en8fP8TfoxTbmwo6/gnxtAh0pdldqM/NqhD6sww==
+Decrypted: RSA encryption is fun
+
+Test Case 3: Course name with numbers
+---------------------------------------
+Input:     CSC431 Info Security
+Encrypted: RK+GqQhnYJpE825Tj28BjPyHXrdEt5EUk2NasLjvDupgAL031y+1S4yv9L4zhkOL7F3mu911XHcy/XeURlN3BeeU9X7FqlOZGDP8dqiuZxPciOE+pgOtYI1DAHTHxrgoJM1W5nvUOfQlAH4o1b1XWYAhJCn/zlifhXruujlJK3WtKnYyVfvN1uT37uhp7v6/g08+FN4ur82aYfSz/zmXkS/TYr+NdEAYsdVSHn+Oz9KFsJgafi84+zXnbfUkxT1p6GxBITQWA0T3rKv7wpIuiOTh1XoogSnuAZKzvn3pe/Bol5kxGPeorSCes36MqXEIKXTEDnAOQ4d03npByOK9hw==
+Decrypted: CSC431 Info Security
+
+All three test cases successfully encrypted and decrypted, confirming the RSA implementation works correctly.

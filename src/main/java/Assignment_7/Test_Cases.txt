@@ -1,0 +1,49 @@
+Test Case 1: Standard Input:
+============================
+Input: "hello"
+
+MD5: 5d41402abc4b2a76b9719d911017c592
+SHA-1: aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+SHA-256: 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+
+Collision Simulated: No
+Collision Detected: No
+
+Notes: Demonstrates a standard plaintext input with unique outputs across all three algorithms.
+
+
+Test Case 2: Empty Input:
+=========================
+Input: ""
+
+MD5: d41d8cd98f00b204e9800998ecf8427e
+SHA-1: da39a3ee5e6b4b0d3255bfef95601890afd80709
+SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+Collision Simulated: No
+Collision Detected: No
+
+Notes: Demonstrates that an empty string still produces a valid, deterministic hash. The program issues a warning for empty input but continues processing.
+
+
+Test Case 3: Simulated Collision:
+=================================
+Input 1: "collision_test"
+Input 2: "SIMULATED_COLLISION" (injected via simulation)
+
+MD5:
+  Hash: beaf94407d710360689d3a1223d54598
+  Inputs: [collision_test, SIMULATED_COLLISION]
+
+SHA-1:
+  Hash: 6c8038e184a735e0f25318b3b06335a9a84458ba
+  Inputs: [collision_test, SIMULATED_COLLISION]
+
+SHA-256:
+  Hash: dd2b69d9efc44cffdcc2872dbbd893a5bfd856bc712b1106657ad3a56b9f1046
+  Inputs: [collision_test, SIMULATED_COLLISION]
+
+Collision Simulated: Yes
+Collision Detected: Yes (all three algorithms)
+
+Notes: Demonstrates the collision detection feature. The simulated collision injects "SIMULATED_COLLISION" into the first hash bucket, triggering a collision report across MD5, SHA-1, and SHA-256. Real-world MD5 collisions exist (Wang et al.), but SHA-256 collisions have not been demonstrated.
