@@ -1,0 +1,56 @@
+TEST CASE 1: Successful Account Creation and Login
+Steps:
+  1. Select option 1 (Create Account)
+  2. Enter username: alice
+  3. Enter password: SecurePass123
+  4. Enter security question: What is your pet's name?
+  5. Enter answer: buddy
+  6. Select option 2 (Login)
+  7. Enter username: alice
+  8. Enter password: SecurePass123
+
+Expected Output:
+  - "Account created successfully for 'alice'."
+  - "Login successful! Welcome, alice."
+
+Actual Output:
+  - Account created successfully for 'alice'.
+  - Login successful! Welcome, alice.
+
+Result: PASS
+
+TEST CASE 2: Failed Login with Incorrect Password
+Steps:
+  1. (Using account 'alice' created in Test Case 1)
+  2. Select option 2 (Login)
+  3. Enter username: alice
+  4. Enter password: WrongPassword
+
+Expected Output:
+  - "Error: Incorrect password."
+
+Actual Output:
+  - Error: Incorrect password.
+
+Result: PASS
+
+TEST CASE 3: Password Reset and Login with New Password
+Steps:
+  1. (Using account 'alice' created in Test Case 1)
+  2. Select option 3 (Reset Password)
+  3. Enter username: alice
+  4. Answer security question "What is your pet's name?" with: buddy
+  5. Enter new password: NewSecurePass456
+  6. Select option 2 (Login)
+  7. Enter username: alice
+  8. Enter password: NewSecurePass456
+
+Expected Output:
+  - "Password reset successful for 'alice'."
+  - "Login successful! Welcome, alice."
+
+Actual Output:
+  - Password reset successful for 'alice'.
+  - Login successful! Welcome, alice.
+
+Result: PASS

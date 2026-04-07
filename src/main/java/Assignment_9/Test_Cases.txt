@@ -1,0 +1,83 @@
+============================
+Test Case 1: Successful Authentication (Exact Match)
+============================
+
+=== Biometric Authentication System ===
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 1
+Enter username: alice
+Enter biometric data (simulated fingerprint pattern): fingerprint-abc-12345
+User 'alice' enrolled successfully.
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 2
+Enter username: alice
+Enter biometric data: fingerprint-abc-12345
+Authentication successful! Welcome, alice.
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 3
+Exiting. Goodbye!
+
+============================
+Test Case 2: Successful Authentication (Fuzzy Match)
+============================
+
+=== Biometric Authentication System ===
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 1
+Enter username: bob
+Enter biometric data (simulated fingerprint pattern): voiceprint-xyz-99887
+User 'bob' enrolled successfully.
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 2
+Enter username: bob
+Enter biometric data: voiceprint-xyz-99886
+Authentication successful! Welcome, bob.
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 3
+Exiting. Goodbye!
+
+============================
+Test Case 3: Failed Authentication (Data Mismatch)
+============================
+
+=== Biometric Authentication System ===
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 1
+Enter username: charlie
+Enter biometric data (simulated fingerprint pattern): retina-scan-55555
+User 'charlie' enrolled successfully.
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 2
+Enter username: charlie
+Enter biometric data: retina-scan-00000
+Authentication failed: Biometric data does not match.
+
+1. Enroll User
+2. Authenticate User
+3. Exit
+Select an option: 3
+Exiting. Goodbye!

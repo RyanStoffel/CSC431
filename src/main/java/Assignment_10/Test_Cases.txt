@@ -1,0 +1,40 @@
+Test Case 1: Successful Registration and Login with OTP
+Input:
+  Register -> Username: alice, Password: SecurePass1, Factor: OTP, Phone: +15551234567
+  Login -> Username: alice, Password: SecurePass1, OTP: (enter the displayed code)
+
+Output:
+  Registration successful for user: alice
+  Sending OTP to +15551234567...
+  [SIMULATED SMS] Your verification code is: 482917
+  MFA Code is correct
+  Login successful. Welcome, alice!
+
+Result: PASS
+
+
+Test Case 2: Successful Registration and Login with Security Question
+Input:
+  Register -> Username: bob, Password: MyPass99, Factor: Security Question, Q: Pet name?, A: max
+  Login -> Username: bob, Password: MyPass99, Answer: max
+
+Output:
+  Registration successful for user: bob
+  Security Question: Pet name?
+  Login successful. Welcome, bob!
+
+Result: PASS
+
+
+Test Case 3: Correct Password but Wrong Second Factor
+Input:
+  Register -> Username: carol, Password: Pass123, Factor: Security Question, Q: City born?, A: denver
+  Login -> Username: carol, Password: Pass123, Answer: chicago
+
+Output:
+  Registration successful for user: carol
+  Security Question: City born?
+  ERROR: Incorrect answer.
+  2 attempt(s) remaining before lockout.
+
+Result: FAIL (as expected - demonstrates MFA preventing access when one factor is compromised)
