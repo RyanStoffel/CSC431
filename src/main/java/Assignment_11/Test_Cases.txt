@@ -1,0 +1,166 @@
+TEST CASE 1: First User Bootstrap and Error Handling
+Objective: Register the first user (ryan) as ADMIN, attempt invalid inputs,
+then register payton who gets auto-assigned VIEWER.
+
+Steps:
+  1. From the main menu, select: 2 (Login)
+     Expected: Login prompt appears.
+     Input username: ryan, password: anything
+     Expected output: "Invalid username or password."
+
+  2. From the main menu, select: 1 (Register)
+     Username : ryan
+     Email    : ryan@test.com
+     Password : pass123
+     Roles available: [ADMIN, EDITOR, VIEWER]
+     Roles (comma-separated): SUPERUSER
+     Expected output: "Unknown role 'SUPERUSER' — skipped."
+                      "No valid roles. Registration cancelled."
+
+  3. From the main menu, select: 1 (Register) again
+     Username : ryan
+     Email    : ryan@test.com
+     Password : pass123
+     Roles (comma-separated): ADMIN
+     Expected output: "Registered 'ryan' with roles: [ADMIN]"
+
+  4. From the main menu, select: 1 (Register)
+     Username : payton
+     Email    : payton@test.com
+     Password : pass456
+     Expected output: "Role assigned: VIEWER (an admin can change this)"
+                      "Registered 'payton' with roles: [VIEWER]"
+
+  5. From the main menu, select: 2 (Login)
+     Username : payton
+     Password : wrongpassword
+     Expected output: "Invalid username or password."
+
+
+TEST CASE 2: Admin Role Management and User Role Assignment
+Objective: Login as ryan (ADMIN), create a new role, assign it to payton,
+attempt to delete the ADMIN role, then delete the custom role.
+
+Steps:
+
+  1. From the main menu, select: 2 (Login)
+     Username : ryan
+     Password : pass123
+     Expected output: "Logged in: ryan [ADMIN]"
+     Landing: Admin Menu
+
+  2. Select: 1 (Create role)
+     Role name: MODERATOR
+     Permissions available: [READ, WRITE, DELETE]
+     Permissions (comma-separated): READ,WRITE
+     Expected output: "Created role 'MODERATOR' with: [READ, WRITE]"
+
+  3. Select: 3 (List roles)
+     Expected output includes:
+       ADMIN: [READ, WRITE, DELETE]
+       EDITOR: [READ, WRITE]
+       VIEWER: [READ]
+       MODERATOR: [READ, WRITE]
+
+  4. Select: 4 (Assign role to user)
+     Username: payton
+     Current roles: [VIEWER]
+     Roles to assign: MODERATOR
+     Expected output: "Assigned: [MODERATOR]"
+
+  5. Select: 4 (Assign role to user)
+     Username: payton
+     Roles to assign: MODERATOR
+     Expected output: "Already had: [MODERATOR]"
+
+  6. Select: 2 (Delete role)
+     Role to delete: ADMIN
+     Expected output: "Cannot delete ADMIN role."
+
+  7. Select: 2 (Delete role)
+     Role to delete: MODERATOR
+     Expected output: "Deleted role 'MODERATOR'."
+
+  8. Select: 3 (List roles)
+     Expected output: MODERATOR is no longer listed.
+
+  9. Select: 7 (Logout)
+     Expected output: "Logged out: ryan"
+
+
+TEST CASE 3: Permission Checks and Role Revocation
+Objective: Register joey, login as joey (VIEWER) and verify access denied
+on restricted actions, then login as ryan and promote joey to EDITOR,
+verify joey can now write, then revoke and confirm access is removed.
+
+Steps:
+
+  1. From the main menu, select: 1 (Register)
+     Username : joey
+     Email    : joey@test.com
+     Password : pass789
+     Expected output: "Role assigned: VIEWER (an admin can change this)"
+                      "Registered 'joey' with roles: [VIEWER]"
+
+  2. From the main menu, select: 2 (Login)
+     Username : joey
+     Password : pass789
+     Expected output: "Logged in: joey [VIEWER]"
+     Landing: User Menu
+
+  3. Select: 1 (Read document)
+     Expected output: "Document content: [lorem ipsum]"
+
+  4. Select: 2 (Edit document)
+     Expected output: "Access denied. Missing permission: WRITE"
+
+  5. Select: 3 (Delete document)
+     Expected output: "Access denied. Missing permission: DELETE"
+
+  6. Select: 4 (Logout)
+     Expected output: "Logged out: joey"
+
+  7. From the main menu, select: 2 (Login)
+     Username : ryan
+     Password : pass123
+     Landing: Admin Menu
+
+  8. Select: 4 (Assign role to user)
+     Username: joey
+     Roles to assign: EDITOR
+     Expected output: "Assigned: [EDITOR]"
+
+  9. Select: 7 (Logout)
+     Expected output: "Logged out: ryan"
+
+  10. From the main menu, select: 2 (Login)
+      Username : joey
+      Password : pass789
+      Expected output: "Logged in: joey [VIEWER, EDITOR]"
+
+  11. Select: 2 (Edit document)
+      Expected output: "Document updated."
+
+  12. Select: 4 (Logout)
+      Expected output: "Logged out: joey"
+
+  13. From the main menu, select: 2 (Login)
+      Username : ryan
+      Password : pass123
+      Landing: Admin Menu
+
+  14. Select: 5 (Remove role from user)
+      Username: joey
+      Current roles: [VIEWER, EDITOR]
+      Roles to remove: EDITOR
+      Expected output: "Removed: [EDITOR]"
+
+  15. Attempt to remove last role:
+      Select: 5 (Remove role from user)
+      Username: joey
+      Current roles: [VIEWER]
+      Roles to remove: VIEWER
+      Expected output: "User must retain at least one role."
+
+  16. Select: 7 (Logout)
+      Expected output: "Logged out: ryan"
